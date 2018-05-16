@@ -1,7 +1,12 @@
 'use strict';
 
 var runes = require('runes');
-var stringLength = require('string-length');
+var stripAnsi = require('strip-ansi');
+var astralRegex = require('astral-regex');
+
+var stringLength = function (input) {
+  return stripAnsi(input).replace(astralRegex(), ' ').length;
+}
 
 module.exports = function (str, _ref) {
   var size = _ref.size,
