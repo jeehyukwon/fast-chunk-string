@@ -1,9 +1,13 @@
 'use strict';
 
-const runes = require('runes');
-const stringLength = require('string-length');
+var runes = require('runes');
+var stringLength = require('string-length');
 
-module.exports = (str, {size, unicodeAware = false}) => {
+module.exports = function (str, _ref) {
+  var size = _ref.size,
+      _ref$unicodeAware = _ref.unicodeAware,
+      unicodeAware = _ref$unicodeAware === undefined ? false : _ref$unicodeAware;
+
   str = str || '';
 
   if (!unicodeAware) {
@@ -14,12 +18,12 @@ module.exports = (str, {size, unicodeAware = false}) => {
 };
 
 function getChunks(str, size) {
-  const strLength = str.length;
-  const numChunks = Math.ceil(strLength / size);
-  const chunks = new Array(numChunks);
+  var strLength = str.length;
+  var numChunks = Math.ceil(strLength / size);
+  var chunks = new Array(numChunks);
 
-  let i = 0;
-  let o = 0;
+  var i = 0;
+  var o = 0;
 
   for (; i < numChunks; ++i, o += size) {
     chunks[i] = str.substr(o, size);
@@ -29,12 +33,12 @@ function getChunks(str, size) {
 }
 
 function getChunksUnicode(str, size) {
-  const strLength = stringLength(str);
-  const numChunks = Math.ceil(strLength / size);
-  const chunks = new Array(numChunks);
+  var strLength = stringLength(str);
+  var numChunks = Math.ceil(strLength / size);
+  var chunks = new Array(numChunks);
 
-  let i = 0;
-  let o = 0;
+  var i = 0;
+  var o = 0;
 
   for (; i < numChunks; ++i, o += size) {
     chunks[i] = runes.substr(str, o, size);
