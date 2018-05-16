@@ -2,16 +2,21 @@
 
 var runes = require('runes');
 var stripAnsi = require('strip-ansi');
-var astralRegex = require('astral-regex');
 
-var stringLength = function (input) {
+const regex = '[\uD800-\uDBFF][\uDC00-\uDFFF]';
+
+var astralRegex = function(opts) {
+  return opts && opts.exact ? new RegExp(`^${regex}$`) : new RegExp(regex, 'g');
+};
+
+var stringLength = function(input) {
   return stripAnsi(input).replace(astralRegex(), ' ').length;
-}
+};
 
-module.exports = function (str, _ref) {
+module.exports = function(str, _ref) {
   var size = _ref.size,
-      _ref$unicodeAware = _ref.unicodeAware,
-      unicodeAware = _ref$unicodeAware === undefined ? false : _ref$unicodeAware;
+    _ref$unicodeAware = _ref.unicodeAware,
+    unicodeAware = _ref$unicodeAware === undefined ? false : _ref$unicodeAware;
 
   str = str || '';
 
